@@ -1,13 +1,18 @@
 from data_loader import load_data
 from contextlib import asynccontextmanager
 from countries_api import router
-import logging
 from fastapi import FastAPI
+
+import logging
+logging.basicConfig(level=logging.INFO)
 
 import sys
 import uvicorn
 LOCAL_IP = "127.0.0.1"
 HOSTED_IP = "0.0.0.0"
+
+LOCAL_PORT = 8080
+HOSTED_PORT = 8080
 
 GRAPH_DATA = None
 SRC_COUNTRY = "USA"
@@ -36,6 +41,6 @@ app.include_router(router)
 if __name__ == "__main__":
     is_local = True if "--local" in sys.argv else False
     if is_local:
-        uvicorn.run("main:app", host=LOCAL_IP, port=8080, reload=True)
+        uvicorn.run("main:app", host=LOCAL_IP, port=LOCAL_PORT, reload=True)
     else:
-        uvicorn.run(app, host=HOSTED_IP, port=8080)
+        uvicorn.run("main:app", host=HOSTED_IP, port=HOSTED_PORT)

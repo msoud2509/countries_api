@@ -1,5 +1,7 @@
 from collections import deque
+
 import logging
+logging.basicConfig(level=logging.INFO)
 
 def bfs(graph: dict, src_country: str, dst_country: str) -> list:
     """
