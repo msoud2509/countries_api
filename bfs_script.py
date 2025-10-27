@@ -1,4 +1,5 @@
 from collections import deque
+import logging
 
 def bfs(graph: dict, src_country: str, dst_country: str) -> list:
     """
@@ -14,7 +15,7 @@ def bfs(graph: dict, src_country: str, dst_country: str) -> list:
         or None if no path exists
     """
     if src_country not in graph:
-        print(f"Source country {src_country} not in graph.")
+        logging.warning(f"Source country {src_country} not in graph.")
         return None
     
     if src_country == dst_country:
@@ -35,9 +36,8 @@ def bfs(graph: dict, src_country: str, dst_country: str) -> list:
                     visited.add(neighbor)
                     queue.append((neighbor, path + [neighbor]))
     except Exception as e:
-        print(f"Error executing BFS: {e}")
-        return None
+        raise Exception(f"Error executing BFS: {e}")
     
     # no path found
-    print(f"No path found from {src_country} to {dst_country}.")
+    logging.warning(f"No path found from {src_country} to {dst_country}.")
     return None

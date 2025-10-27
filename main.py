@@ -1,6 +1,7 @@
 from data_loader import load_data
 from contextlib import asynccontextmanager
 from countries_api import router
+import logging
 from fastapi import FastAPI
 
 import sys
@@ -18,7 +19,7 @@ async def lifespan(app: FastAPI):
     try:
         GRAPH_DATA = load_data('countries_graph.json')
     except Exception as e:
-        print(f"Error loading graph data: {e}")
+        logging.error(f"Error loading graph data: {e}")
     if not GRAPH_DATA:
         raise ValueError("Failed to load graph data on startup")
 
