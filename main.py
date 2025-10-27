@@ -6,7 +6,7 @@ from fastapi import FastAPI
 import sys
 import uvicorn
 LOCAL_IP = "127.0.0.1"
-HOSTED_IP = ""
+HOSTED_IP = "0.0.0.0"
 
 GRAPH_DATA = None
 SRC_COUNTRY = "USA"
@@ -20,9 +20,7 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         print(f"Error loading graph data: {e}")
     if not GRAPH_DATA:
-        print("Warning: Graph data is empty after loading.")
-    else:
-        print("Graph data loaded successfully.")
+        raise ValueError("Failed to load graph data on startup")
 
     yield # server running
 
@@ -37,6 +35,6 @@ app.include_router(router)
 if __name__ == "__main__":
     is_local = True if "--local" in sys.argv else False
     if is_local:
-        uvicorn.run("main:app", host=LOCAL_IP, port=8000, reload=True)
+        uvicorn.run("main:app", host=LOCAL_IP, port=8080, reload=True)
     else:
-        uvicorn.run(app, host=HOSTED_IP, port=8000)
+        uvicorn.run(app, host=HOSTED_IP, port=8080)

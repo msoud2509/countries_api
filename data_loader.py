@@ -14,5 +14,4 @@ def load_data(file_path: str) -> dict:
             data = json.load(file)
         return data
     except Exception as e:
-        print(f"Error loading JSON data: {e}")
-        return None
+        raise Exception(f"Failed to load data from {file_path}: {e}")

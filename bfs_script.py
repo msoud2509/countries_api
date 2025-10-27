@@ -14,24 +14,30 @@ def bfs(graph: dict, src_country: str, dst_country: str) -> list:
         or None if no path exists
     """
     if src_country not in graph:
+        print(f"Source country {src_country} not in graph.")
         return None
     
     if src_country == dst_country:
         return [src_country]
     
-    visited = set([src_country])
-    queue = deque([(src_country, [src_country])])  # queue of (current_node, path_to_current_node)
+    try:
+        visited = set([src_country])
+        queue = deque([(src_country, [src_country])])  # queue of (current_node, path_to_current_node)
 
-    while queue:
-        cur_country, path = queue.popleft()
-        
-        for neighbor in graph.get(cur_country, []):
-            if neighbor == dst_country:
-                return path + [neighbor]
+        while queue:
+            cur_country, path = queue.popleft()
             
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append((neighbor, path + [neighbor]))
+            for neighbor in graph.get(cur_country, []):
+                if neighbor == dst_country:
+                    return path + [neighbor]
+                
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append((neighbor, path + [neighbor]))
+    except Exception as e:
+        print(f"Error executing BFS: {e}")
+        return None
     
     # no path found
+    print(f"No path found from {src_country} to {dst_country}.")
     return None
