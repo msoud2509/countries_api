@@ -14,6 +14,6 @@ COPY countries_api.py .
 COPY main.py .
 COPY countries_graph.json .
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD ["python", "main.py"]
